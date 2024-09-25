@@ -1,17 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js]template utilizing best practices from shadcn, createnextapp 
 
 ## Getting Started
+bun install or bun i to install the packages
 
 First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+
 bun dev
+
+Use npx shadcn add [component] to add new components (https://ui.shadcn.com)
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
