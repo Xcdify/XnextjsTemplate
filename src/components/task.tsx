@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useDrag } from 'react-dnd'
 
 type TaskProps = {
@@ -12,7 +12,7 @@ type TaskProps = {
 }
 
 export function TaskComponent({ task, laneId }: TaskProps) {
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, dragPreview] = useDrag({
     type: 'TASK',
     item: { id: task.id, laneId },
     collect: (monitor) => ({
@@ -20,9 +20,17 @@ export function TaskComponent({ task, laneId }: TaskProps) {
     }),
   })
 
+  const previewRef = useRef(null);
+
+  useEffect(() => {
+    if (dragPreview) {
+      dragPreview(previewRef);
+    }
+  }, [dragPreview]);
+
   return (
     <div
-      ref={drag}
+      ref={previewRef}
       className={`bg-white p-2 rounded shadow ${isDragging ? 'opacity-50' : ''}`}
     >
       {task.content}

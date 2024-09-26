@@ -6,9 +6,9 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Button } from '@/src/components/ui/button'
 import { Input } from '@/src/components/ui/input'
 import { PlusIcon, TableIcon, ColumnsIcon } from 'lucide-react'
-import Lane from './Lane'
-import Task from './Task'
-import TableView from './TableView'
+import { LaneComponent } from './lane'
+import { TaskComponent } from './task'
+import { TableViewComponent } from './table-view'
 
 type Task = {
   id: string
@@ -94,15 +94,15 @@ export function KanbanBoardComponent() {
         {viewMode === 'lane' ? (
           <div className="flex space-x-4 overflow-x-auto">
             {lanes.map(lane => (
-              <Lane key={lane.id} lane={lane} addTask={addTask} moveTask={moveTask}>
+              <LaneComponent key={lane.id} lane={lane} addTask={addTask} moveTask={moveTask}>
                 {lane.tasks.map(task => (
-                  <Task key={task.id} task={task} laneId={lane.id} />
+                  <TaskComponent key={task.id} task={task} laneId={lane.id} />
                 ))}
-              </Lane>
+              </LaneComponent>
             ))}
           </div>
         ) : (
-          <TableView lanes={lanes} moveTask={moveTask} />
+          <TableViewComponent lanes={lanes} moveTask={moveTask} />
         )}
       </div>
     </DndProvider>
