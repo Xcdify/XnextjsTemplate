@@ -91,7 +91,7 @@ export function DataTableInfinite<TData, TValue>({
   );
   const [columnVisibility, setColumnVisibility] =
     useLocalStorage<VisibilityState>("data-table-visibility", {
-      uuid: false,
+      orderId: false,
       "timing.dns": false,
       "timing.connection": false,
       "timing.tls": false,
@@ -107,6 +107,7 @@ export function DataTableInfinite<TData, TValue>({
   const [_, setSearch] = useQueryStates(searchParamsParser);
 
   React.useEffect(() => {
+    
     const observer = new ResizeObserver(() => {
       const rect = topBarRef.current?.getBoundingClientRect();
       if (rect) {
@@ -151,7 +152,7 @@ export function DataTableInfinite<TData, TValue>({
     },
     enableMultiRowSelection: false,
     // @ts-ignore FIXME: because it is not in the types
-    getRowId: (row, index) => `${row?.uuid}` || `${index}`,
+    getRowId: (row, index) => `${row?.orderId}` || `${index}`,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
     onRowSelectionChange: setRowSelection,
@@ -210,13 +211,14 @@ export function DataTableInfinite<TData, TValue>({
       .flatRows.find((row) => row.id === selectedRowKey);
   }, [rowSelection, table]);
 
-  // FIXME: cannot share a uuid with the sheet details
+
+  // FIXME: cannot share a orderId with the sheet details
   React.useEffect(() => {
     if (Object.keys(rowSelection)?.length && !selectedRow) {
-      setSearch({ uuid: null });
+      setSearch({ orderId: null });
       setRowSelection({});
     } else {
-      setSearch({ uuid: Object.keys(rowSelection)?.[0] || null });
+      setSearch({ orderId: Object.keys(rowSelection)?.[0] || null });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowSelection, selectedRow]);

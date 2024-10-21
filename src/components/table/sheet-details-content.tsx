@@ -16,29 +16,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"; // Adjust the import path
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { columnSchema } from "./schema";
 
-const schema = z.object({
-  orderId: z.string().uuid(),
-  customerName: z.string(),
-  customerEmail: z.string().email(),
-  customerPhone: z.string(),
-  customerAddress: z.string(),
-  customerCity: z.string(),
-  customerCountry: z.string(),
-  productName: z.string(),
-  productCategory: z.string(),
-  quantity: z.number().min(1).max(100),
-  price: z.string().transform((val) => parseFloat(val.replace("$", ""))),
-  orderStatus: z.enum(["Pending", "Shipped", "Delivered", "Cancelled"]),
-  paymentStatus: z.enum(["Paid", "Unpaid", "Refunded"]),
-  transactionDate: z.coerce.date(),
-  deliveryDate: z.coerce.date(),
-  shippingMethod: z.enum(["Standard", "Express", "Overnight"]),
-  totalAmount: z.string().transform((val) => parseFloat(val.replace("$", ""))),
-  invoiceNumber: z.string().length(10),
-});
 
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<typeof columnSchema>;
 
 interface EditableColumnFormProps {
   data: FormData;
@@ -50,7 +31,7 @@ const SheetDetailsContent: React.FC<EditableColumnFormProps> = ({
   onSubmit,
 }) => {
   const form = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(columnSchema),
     defaultValues: data,
   });
 
